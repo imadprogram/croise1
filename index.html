@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style type="text/tailwindcss">
+    @theme {
+        --color-clifford: #da373d;
+      }
+    </style>
+
+<body class="flex">
+
+    <section id="side" class="w-[18%] bg-slate-300 h-dvh flex flex-col">
+        <div id="workers-container" class="grow  flex flex-col items-center gap-5 pt-4">
+
+        </div>
+        <div class="h-12 text-white flex items-center justify-center">
+            <button id="newworker" class="rounded-lg bg-green-500 px-4 py-2"><i class="fa-solid fa-plus"></i>add
+                worker</button>
+        </div>
+    </section>
+
+    <section class="bg-[url('img/ground.jpg')] bg-cover grow flex h-dvh">
+
+        <div class="first-side ">
+            <div class="bg-[rgba(255,0,0,.2)] w-[31em] h-[15em]"></div>
+            <div class="bg-[rgba(255,0,0,.2)] w-[31em] h-[30em]"></div>
+        </div>
+
+        <div class="road w-[13em] h-dvh bg-[rgba(255,255,255,.3)]"></div>
+
+        <div class="second-side ">
+
+            <div class="upside flex">
+                <div class="bg-[rgba(255,0,0,.2)] w-[18em] h-[16em]"></div>
+                <div class="bg-[rgba(255,255,0,.2)] w-[18em] h-[16em]"></div>
+            </div>
+
+            <div class="road  h-[14em] bg-[rgba(255,255,255,.3)]"></div>
+
+            <div class="downside flex">
+                <div class="bg-[rgba(255,0,0,.2)] w-[18em] h-[15em]"></div>
+                <div class="bg-[rgba(255,255,0,.2)] w-[18em] h-[15em]"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- dynamic form -->
+    <div id="form-bg" class="hidden fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.6)]">
+        <div id="form" class="px-10 h-[70%] bg-white overflow-y-scroll [scrollbar-width:none] rounded-lg py-5">
+            <form class="flex flex-col gap-6 justify-center items-center ">
+                <h1 class="font-bold">Add New Worker</h1>
+                <input required type="text" placeholder="Full Name" class="input   w-80 h-10 border rounded-lg pl-3 shrink-0" name="fullname">
+                <select name="select" class="input   border w-80 py-2 rounded-lg shrink-0">
+                    <option value="Receptionist">Receptionist</option>
+                    <option value="IT">IT</option>
+                    <option value="Security">Security</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Archivist">Archivist</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input id="urlpreview" required type="text" placeholder="picture url" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="picture">
+                <img id="preview-img" src="" alt="" class="shrink-0 bg-gray-400 w-20 h-20 rounded-full">
+                <input required type="email" placeholder="Email" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="email">
+                <input required type="number" placeholder="Phone Number" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="number">
+
+                <div id="dynamic" class="flex flex-col gap-4">
+                    <div id="experience-form" class="flex flex-col justify-center items-center gap-5 shrink-0">
+                        <h2 class="font-bold">Experience</h2>
+                        <input required type="text" placeholder="Job Name" name="job" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
+                        <input required type="text" placeholder="Company Name" name="company" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
+                        <input required type="date" placeholder="From" name="from" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
+                        <input required type="date" placeholder="To" name="to" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
+                    </div>
+                </div>
+                <button id="addex" class="rounded-lg bg-blue-400 h-10 w-40 pl-3 shrink-0">Add Experience</button>
+                <button type="submit" id="addworker" class="rounded-lg bg-green-400 h-10 w-80 pl-3 shrink-0">Add Worker</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+<script src="script.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+</html>
