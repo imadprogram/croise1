@@ -71,8 +71,6 @@ const addworker = document.getElementById('addworker')
 
 
 form.addEventListener('submit', (e) => {
-
-
     if (nameValidation() && emailValidation() && numberValidation()) {
         formbg.classList.add('hidden')
         Toastify({
@@ -82,14 +80,24 @@ form.addEventListener('submit', (e) => {
             position: "center"
         }).showToast();
 
-
         let obj = {}
+        let experiences = []
 
         inputs.forEach(input => {
             obj[input.name] = input.value;
             input.value = ''
         })
+         
+        const exforms = document.querySelectorAll('.experience-form')
+        exforms.forEach(form =>{
+            let objex = {}
+            form.querySelectorAll('input').forEach(input=>{
+                objex[input.name] = input.value
+            })
+            experiences.push(objex)
+        })
 
+        obj.experiences = experiences;
         workers.push(obj)
         console.log(workers)
 
@@ -111,14 +119,11 @@ form.addEventListener('submit', (e) => {
 
             // dynamic.removeChild(newform)
         })
-
-
-    } else {
+    }else{
         alert('false')
     }
+
     e.preventDefault()
-
-
 })
 
 const urlinput = document.getElementById('urlpreview')
@@ -129,10 +134,7 @@ const preview = document.getElementById('preview-img')
 urlinput.addEventListener('change', () => {
     preview.src = `${urlinput.value}`
 })
-
-
 // form validation
-
 function nameValidation() {
     const fullname = form.querySelector('#fullname').value.trim()
     const namevalid = /^[a-zA-Z]{2,}$/g
@@ -141,14 +143,12 @@ function nameValidation() {
         // form.querySelector('#fullname').classList.add('bg-red-400')
         return true
     }
-
 }
 function emailValidation() {
     const email = form.querySelector('#email').value.trim()
     const emailvalid = /[a-zA-Z|0-9]+@[a-zA-Z]{5,}.[a-z]{2,}/g
 
     if (emailvalid.test(email)) return true
-
 }
 function numberValidation() {
     const number = form.querySelector('#number').value.trim()
