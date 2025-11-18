@@ -10,7 +10,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <style type="text/tailwindcss">
     @theme {
@@ -61,7 +60,7 @@
         <div id="form" class="px-10 h-[70%] bg-white overflow-y-scroll [scrollbar-width:none] rounded-lg py-5">
             <form class="flex flex-col gap-6 justify-center items-center ">
                 <h1 class="font-bold">Add New Worker</h1>
-                <input required type="text" placeholder="Full Name" class="input   w-80 h-10 border rounded-lg pl-3 shrink-0" name="fullname">
+                <input id="fullname" required type="text" placeholder="Full Name" class="input  w-80 h-10 border rounded-lg pl-3 shrink-0" name="fullname">
                 <select name="select" class="input   border w-80 py-2 rounded-lg shrink-0">
                     <option value="Receptionist">Receptionist</option>
                     <option value="IT">IT</option>
@@ -73,16 +72,16 @@
                 </select>
                 <input id="urlpreview" required type="text" placeholder="picture url" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="picture">
                 <img id="preview-img" src="" alt="" class="shrink-0 bg-gray-400 w-20 h-20 rounded-full">
-                <input required type="email" placeholder="Email" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="email">
-                <input required type="number" placeholder="Phone Number" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="number">
+                <input id="email" required type="email" placeholder="Email" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="email">
+                <input id="number" required type="text" placeholder="Phone Number" class="input   rounded-lg border h-10 w-80 pl-3 shrink-0" name="number">
 
-                <div id="dynamic" class="flex flex-col gap-4">
-                    <div id="experience-form" class="flex flex-col justify-center items-center gap-5 shrink-0">
+                <div class="dynamic flex flex-col gap-4">
+                    <div class="experience-form flex flex-col justify-center items-center gap-5 shrink-0">
                         <h2 class="font-bold">Experience</h2>
                         <input required type="text" placeholder="Job Name" name="job" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
                         <input required type="text" placeholder="Company Name" name="company" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
-                        <input required type="date" placeholder="From" name="from" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
-                        <input required type="date" placeholder="To" name="to" class="input    rounded-lg border h-10 w-80 pl-3 shrink-0">
+                        <input required type="date" placeholder="From" name="from" class="input from   rounded-lg border h-10 w-80 pl-3 shrink-0">
+                        <input required type="date" placeholder="To" name="to" class="input to   rounded-lg border h-10 w-80 pl-3 shrink-0">
                     </div>
                 </div>
                 <button id="addex" class="rounded-lg bg-blue-400 h-10 w-40 pl-3 shrink-0">Add Experience</button>
