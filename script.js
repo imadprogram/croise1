@@ -105,7 +105,7 @@ form.addEventListener('submit', (e) => {
         workers.forEach(worker => {
             workersSide.innerHTML += `
             <div data-id = '${workers.length - 1}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
-                <img src="img/ground.jpg" alt="" class="rounded-full w-10 h-10">
+                <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
                 <div>
                     <h2 class="font-bold">${worker.fullname}</h2>
                     <p class="text-sm text-gray-500">${worker.job}</p>
@@ -171,7 +171,7 @@ workersSide.addEventListener('click', (e) => {
         const profile = document.createElement('div')
         profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.6)]"
         profile.innerHTML = `
-        <div class="h-[80%] w-[23em] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
+        <div class="lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
             <div id="banner" class="[background-image:url(img/banner.jpg)] bg-cover h-32 relative pl-4">
                 <div class="rounded-full w-20 h-20 absolute translate-y-[50%] bottom-0 p-1 bg-white">
                     <img src="${worker.picture}" alt="" class="rounded-full h-full w-full">
