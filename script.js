@@ -7,7 +7,15 @@ const inputs = document.querySelectorAll('.input')
 newworker.addEventListener('click', () => {
     formbg.classList.remove('hidden')
 })
-
+document.addEventListener('keydown', (e) => {
+    console.log(e.key)
+    if (e.key === 'Escape') {
+        formbg.classList.add('hidden')
+        inputs.forEach(input => {
+            input.value = ''
+        })
+    }
+})
 formbg.addEventListener('click', () => {
     formbg.classList.add('hidden')
     inputs.forEach(input => {
@@ -203,4 +211,60 @@ workersSide.addEventListener('click', (e) => {
     } else {
         return
     }
+})
+
+
+// add to room button
+
+const conferenceBtn = document.querySelector('#conference-btn')
+conferenceBtn.addEventListener('click', () => {
+    let popup = document.createElement('div')
+    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2'
+    workers.forEach(worker => {
+        popup.innerHTML += `
+            <div data-id = '${workers.length - 1}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
+                <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
+                <div>
+                    <h2 class="font-bold">${worker.fullname}</h2>
+                    <p class="text-sm text-gray-500">${worker.job}</p>
+                </div>
+            </div>
+            `})
+
+    document.body.querySelector('.conference').appendChild(popup)
+})
+const receptionBtn = document.querySelector('#reception-btn')
+receptionBtn.addEventListener('click', () => {
+    let popup = document.createElement('div')
+    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
+
+    document.body.querySelector('.conference').appendChild(popup)
+})
+const serversBtn = document.querySelector('#servers-btn')
+serversBtn.addEventListener('click', () => {
+    let popup = document.createElement('div')
+    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
+
+    document.body.querySelector('.conference').appendChild(popup)
+})
+const securityBtn = document.querySelector('#security-btn')
+securityBtn.addEventListener('click', () => {
+    let popup = document.createElement('div')
+    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
+
+    document.body.querySelector('.conference').appendChild(popup)
+})
+const staffBtn = document.querySelector('#staff-btn')
+staffBtn.addEventListener('click', () => {
+    let popup = document.createElement('div')
+    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
+
+    document.body.querySelector('.conference').appendChild(popup)
+})
+const archiveBtn = document.querySelector('#archive-btn')
+archiveBtn.addEventListener('click', () => {
+    let popup = document.createElement('div')
+    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
+
+    document.body.querySelector('.conference').appendChild(popup)
 })
