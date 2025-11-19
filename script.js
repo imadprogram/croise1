@@ -8,7 +8,6 @@ newworker.addEventListener('click', () => {
     formbg.classList.remove('hidden')
 })
 document.addEventListener('keydown', (e) => {
-    console.log(e.key)
     if (e.key === 'Escape') {
         formbg.classList.add('hidden')
         inputs.forEach(input => {
@@ -215,56 +214,135 @@ workersSide.addEventListener('click', (e) => {
 
 
 // add to room button
+function workersBox(ppl, title, room) {
+    let popup = document.createElement('div')
+    let popupmodal = document.createElement('div')
+    popup.className = 'fixed w-full h-full bg-[rgba(0,0,0,.2)] flex justify-center items-center'
+    popupmodal.className = 'w-[22em] h-[15em]  rounded-lg  bg-white flex flex-col gap-2 items-center'
+
+    // Title
+    let titleEl = document.createElement('h2')
+    titleEl.textContent = title
+    titleEl.className = "font-bold text-lg p-2"
+    popupmodal.appendChild(titleEl)
+
+    // Add workers
+    ppl.forEach(worker => {
+        let originalindex = workers.indexOf(worker)
+
+        let box = document.createElement('div')
+        box.className = "worker-box flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3"
+        box.dataset.id = originalindex
+
+        // image
+        let img = document.createElement('img')
+        img.src = worker.picture
+        img.className = "rounded-full w-10 h-10"
+
+        // text container
+        let txt = document.createElement('div')
+        txt.innerHTML = `
+        <h2 class="font-bold">${worker.fullname}</h2>
+        <p class="text-sm text-gray-500">${worker.job}</p>
+    `
+
+        box.appendChild(img)
+        box.appendChild(txt)
+        popupmodal.appendChild(box)
+    })
+
+    popup.appendChild(popupmodal)
+    document.body.appendChild(popup)
+
+    popup.onclick = () => {
+        document.body.removeChild(popup)
+    }
+    popupmodal.onclick = (e) => {
+        e.stopPropagation()
+    }
+    // add them to the rooms
+
+    popupmodal.addEventListener('click', (e) => {
+        let box = e.target.closest('.worker-box')
+        if (box) {
+            let id = box.dataset.id
+            let worker = workers[id]
+            workers[id].assigned = true
+            let newbox = document.createElement('div')
+            newbox.className = "worker-box flex w-[90%] h-15 rounded-lg bg-white [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3"
+            newbox.dataset.id = id
+
+            let img = document.createElement('img')
+            img.src = worker.picture
+            img.className = "rounded-full w-10 h-10"
+
+            let txt = document.createElement('div')
+            txt.innerHTML = `
+            <h2 class="font-bold">${worker.fullname}</h2>
+            <p class="text-sm text-gray-500">${worker.job}</p>
+            `
+
+            newbox.appendChild(img)
+            newbox.appendChild(txt)
+            room.appendChild(newbox)
+
+            document.body.removeChild(popup)
+        }
+    })
+}
+
+function displayOnServers() {
+    let serverPPL = []
+    serverPPL = workers.filter(worker => (worker.job === 'IT' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
+    let serverRoom = document.querySelector('.servers')
+    workersBox(serverPPL, "server room", serverRoom)
+}
+function displayOnSecurity() {
+    let securityPPL = []
+    securityPPL = workers.filter(worker => (worker.job === 'Security' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
+    let securityRoom = document.querySelector('.security')
+    workersBox(securityPPL, "security room", securityRoom)
+}
+function displayOnArchive() {
+    let archivePPL = []
+    archivePPL = workers.filter(worker => worker.job === 'Manager')
+    let archiveroom = document.querySelector('.archive')
+    workersBox(archivePPL, "archive room", archiveroom)
+}
+function displayOnStaff() {
+    let staffPPL = []
+    staffPPL = workers.filter(worker => worker.job === 'Manager')
+    let staffroom = document.querySelector('.staff')
+    workersBox(staffPPL, "staff room", staffroom)
+}
+
+// their buttons //
 
 const conferenceBtn = document.querySelector('#conference-btn')
 conferenceBtn.addEventListener('click', () => {
-    let popup = document.createElement('div')
-    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2'
-    workers.forEach(worker => {
-        popup.innerHTML += `
-            <div data-id = '${workers.length - 1}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
-                <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
-                <div>
-                    <h2 class="font-bold">${worker.fullname}</h2>
-                    <p class="text-sm text-gray-500">${worker.job}</p>
-                </div>
-            </div>
-            `})
-
-    document.body.querySelector('.conference').appendChild(popup)
+    let conferenceroom = document.querySelector('.conference')
+    const available = workers.filter(worker=> !worker.assigned)
+    workersBox(available , "conference room", conferenceroom)
 })
 const receptionBtn = document.querySelector('#reception-btn')
 receptionBtn.addEventListener('click', () => {
-    let popup = document.createElement('div')
-    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
-
-    document.body.querySelector('.conference').appendChild(popup)
+    let receptionroom = document.querySelector('.reception')
+    const available = workers.filter(worker=> !worker.assigned)
+    workersBox(available , "reception room", receptionroom)
 })
 const serversBtn = document.querySelector('#servers-btn')
 serversBtn.addEventListener('click', () => {
-    let popup = document.createElement('div')
-    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
-
-    document.body.querySelector('.conference').appendChild(popup)
+    displayOnServers()
 })
 const securityBtn = document.querySelector('#security-btn')
 securityBtn.addEventListener('click', () => {
-    let popup = document.createElement('div')
-    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
-
-    document.body.querySelector('.conference').appendChild(popup)
+    displayOnSecurity()
 })
 const staffBtn = document.querySelector('#staff-btn')
 staffBtn.addEventListener('click', () => {
-    let popup = document.createElement('div')
-    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
-
-    document.body.querySelector('.conference').appendChild(popup)
+    displayOnStaff()
 })
 const archiveBtn = document.querySelector('#archive-btn')
 archiveBtn.addEventListener('click', () => {
-    let popup = document.createElement('div')
-    popup.className = 'fixed  w-[22em] h-[15em]  rounded-lg  bg-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'
-
-    document.body.querySelector('.conference').appendChild(popup)
+    displayOnArchive()
 })
