@@ -13,6 +13,7 @@ document.addEventListener('keydown', (e) => {
         inputs.forEach(input => {
             input.value = ''
         })
+        clearDynamicForms()
     }
 })
 formbg.addEventListener('click', () => {
@@ -20,6 +21,7 @@ formbg.addEventListener('click', () => {
     inputs.forEach(input => {
         input.value = ''
     })
+    clearDynamicForms()
 })
 
 form.addEventListener('click', (e) => {
@@ -59,11 +61,14 @@ addex.addEventListener('click', (e) => {
     remove.addEventListener('click',()=>{
         dynamic.removeChild(newformContainer)
     })
-    if(formbg.classList.contains('hidden')){
-        dynamic.removeChild(newformContainer)
-    }
 })
 
+function clearDynamicForms(){
+    const alldynamicForms = document.querySelectorAll('.experience-form')
+    alldynamicForms.forEach((form,index)=>{
+        if(index > 0) form.parentElement.remove()
+    })
+}
 
 const addworker = document.getElementById('addworker')
 
@@ -116,6 +121,7 @@ form.addEventListener('submit', (e) => {
             })
 
             // dynamic.removeChild(newform)
+            clearDynamicForms()
         })
     } else {
         alert('false')
@@ -305,13 +311,13 @@ function displayOnSecurity() {
 }
 function displayOnArchive() {
     let archivePPL = []
-    archivePPL = workers.filter(worker => worker.job === 'Manager')
+    archivePPL = workers.filter(worker => (worker.job === 'Manager') && !worker.assigned)
     let archiveroom = document.querySelector('.archive')
     workersBox(archivePPL, "archive room", archiveroom)
 }
 function displayOnStaff() {
     let staffPPL = []
-    staffPPL = workers.filter(worker => worker.job === 'Manager')
+    staffPPL = workers.filter(worker => (worker.job === 'Manager') && !worker.assigned)
     let staffroom = document.querySelector('.staff')
     workersBox(staffPPL, "staff room", staffroom)
 }
