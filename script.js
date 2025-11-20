@@ -173,7 +173,7 @@ workersSide.addEventListener('click', (e) => {
         const worker = workers[id]
         // console.log(worker)
         const profile = document.createElement('div')
-        profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.6)]"
+        profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.6)] backdrop-blur"
         profile.innerHTML = `
         <div class="profile-popup   lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
             <div id="banner" class="[background-image:url(img/banner.jpg)] bg-cover h-32 relative pl-4">
@@ -223,7 +223,7 @@ workersSide.addEventListener('click', (e) => {
 function workersBox(ppl, title, room) {
     let popup = document.createElement('div')
     let popupmodal = document.createElement('div')
-    popup.className = 'fixed w-full h-full bg-[rgba(0,0,0,.2)] flex justify-center items-center'
+    popup.className = 'fixed w-full h-full bg-[rgba(0,0,0,.2)] flex justify-center items-center backdrop-blur'
     popupmodal.className = 'w-[22em] h-[20em]  rounded-lg  bg-white flex flex-col gap-2 items-center overflow-y-scroll [scrollbar-width:none]'
 
     // Title
@@ -266,6 +266,11 @@ function workersBox(ppl, title, room) {
     popupmodal.onclick = (e) => {
         e.stopPropagation()
     }
+    document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.body.removeChild(popup)
+    }
+})
     // add them to the rooms
 
     popupmodal.addEventListener('click', (e) => {
