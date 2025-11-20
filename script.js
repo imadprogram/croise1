@@ -113,6 +113,7 @@ form.addEventListener('submit', (e) => {
                     <h2 class="font-bold">${worker.fullname}</h2>
                     <p class="text-sm text-gray-500">${worker.job}</p>
                 </div>
+                <ion-icon name="trash-sharp" class="text-red-400"></ion-icon>
             </div>
             `
 
@@ -173,7 +174,7 @@ workersSide.addEventListener('click', (e) => {
         const worker = workers[id]
         // console.log(worker)
         const profile = document.createElement('div')
-        profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.6)] backdrop-blur"
+        profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.2)] backdrop-blur"
         profile.innerHTML = `
         <div class="profile-popup   lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
             <div id="banner" class="[background-image:url(img/banner.jpg)] bg-cover h-32 relative pl-4">
@@ -240,17 +241,15 @@ function workersBox(ppl, title, room) {
         box.className = "worker-box flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
         box.dataset.id = originalindex
 
-        // image
         let img = document.createElement('img')
         img.src = worker.picture
         img.className = "rounded-full w-10 h-10"
 
-        // text container
         let txt = document.createElement('div')
         txt.innerHTML = `
         <h2 class="font-bold">${worker.fullname}</h2>
         <p class="text-sm text-gray-500">${worker.job}</p>
-    `
+        `
 
         box.appendChild(img)
         box.appendChild(txt)
@@ -320,11 +319,11 @@ function displayOnArchive() {
     let archiveroom = document.querySelector('.archive')
     workersBox(archivePPL, "archive room", archiveroom)
 }
-function displayOnStaff() {
-    let staffPPL = []
-    staffPPL = workers.filter(worker => (worker.job === 'Manager') && !worker.assigned)
-    let staffroom = document.querySelector('.staff')
-    workersBox(staffPPL, "staff room", staffroom)
+function displayOnReception() {
+    let recptionPPL = []
+    recptionPPL = workers.filter(worker => (worker.job === 'Receptionist') && !worker.assigned)
+    let receptionroom = document.querySelector('.staff')
+    workersBox(recptionPPL, "staff room", receptionroom)
 }
 
 // their buttons //
@@ -337,9 +336,7 @@ conferenceBtn.addEventListener('click', () => {
 })
 const receptionBtn = document.querySelector('#reception-btn')
 receptionBtn.addEventListener('click', () => {
-    let receptionroom = document.querySelector('.reception')
-    const available = workers.filter(worker => !worker.assigned)
-    workersBox(available, "reception room", receptionroom)
+    displayOnReception()
 })
 const serversBtn = document.querySelector('#servers-btn')
 serversBtn.addEventListener('click', () => {
@@ -351,7 +348,9 @@ securityBtn.addEventListener('click', () => {
 })
 const staffBtn = document.querySelector('#staff-btn')
 staffBtn.addEventListener('click', () => {
-    displayOnStaff()
+    staffPPL = workers.filter(worker => !worker.assigned)
+    let staffroom = document.querySelector('.staff')
+    workersBox(staffPPL, "staff room", staffroom)
 })
 const archiveBtn = document.querySelector('#archive-btn')
 archiveBtn.addEventListener('click', () => {
