@@ -40,8 +40,8 @@ const exForm = document.querySelector('.experience-form')
 
 addex.addEventListener('click', (e) => {
     e.preventDefault()
-    const newformcContainer = document.createElement('div')
-    newformcContainer.className = "flex flex-col gap-2 justify-center items-center"
+    const newformContainer = document.createElement('div')
+    newformContainer.className = "flex flex-col gap-2 justify-center items-center"
     const remove = document.createElement('button')
     remove.innerHTML = `<ion-icon name="trash-sharp"></ion-icon> Remove`
     remove.className = "bg-red-500 px-2 rounded-full text-white flex justify-center items-center gap-1 py-1"
@@ -52,13 +52,16 @@ addex.addEventListener('click', (e) => {
         input.value = ''
     }
     )
-    newformcContainer.appendChild(newform)
-    newformcContainer.appendChild(remove)
-    dynamic.appendChild(newformcContainer)
+    newformContainer.appendChild(newform)
+    newformContainer.appendChild(remove)
+    dynamic.appendChild(newformContainer)
 
     remove.addEventListener('click',()=>{
-        dynamic.removeChild(newformcContainer)
+        dynamic.removeChild(newformContainer)
     })
+    if(formbg.classList.contains('hidden')){
+        dynamic.removeChild(newformContainer)
+    }
 })
 
 
@@ -132,7 +135,7 @@ urlinput.addEventListener('change', () => {
 // form validation
 function nameValidation() {
     const fullname = form.querySelector('#fullname').value.trim()
-    const namevalid = /^[a-zA-Z]{2,}$/g
+    const namevalid = /^[a-zA-Z]{2,}\s[a-zA-z]{2,}$/g
 
     if (namevalid.test(fullname)) {
         // form.querySelector('#fullname').classList.add('bg-red-400')
