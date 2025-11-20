@@ -107,7 +107,7 @@ form.addEventListener('submit', (e) => {
         workersSide.innerHTML = ''
         workers.forEach((worker, index) => {
             workersSide.innerHTML += `
-            <div data-id = '${index}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
+            <div data-id = '${index}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3">
                 <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
                 <div>
                     <h2 class="font-bold">${worker.fullname}</h2>
@@ -224,7 +224,7 @@ function workersBox(ppl, title, room) {
     let popup = document.createElement('div')
     let popupmodal = document.createElement('div')
     popup.className = 'fixed w-full h-full bg-[rgba(0,0,0,.2)] flex justify-center items-center'
-    popupmodal.className = 'w-[22em] h-[15em]  rounded-lg  bg-white flex flex-col gap-2 items-center'
+    popupmodal.className = 'w-[22em] h-[20em]  rounded-lg  bg-white flex flex-col gap-2 items-center overflow-y-scroll [scrollbar-width:none]'
 
     // Title
     let titleEl = document.createElement('h2')
@@ -237,7 +237,7 @@ function workersBox(ppl, title, room) {
         let originalindex = workers.indexOf(worker)
 
         let box = document.createElement('div')
-        box.className = "worker-box flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3"
+        box.className = "worker-box flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
         box.dataset.id = originalindex
 
         // image
@@ -275,7 +275,7 @@ function workersBox(ppl, title, room) {
             let worker = workers[id]
             workers[id].assigned = true
             let newbox = document.createElement('div')
-            newbox.className = "worker-box flex w-[90%] h-15 rounded-lg bg-white [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3"
+            newbox.className = "worker-box flex w-[90%] h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
             newbox.dataset.id = id
 
             let img = document.createElement('img')
