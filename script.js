@@ -28,34 +28,11 @@ form.addEventListener('click', (e) => {
 
 
 const workers = [
-    // {
-    //     fullname: 'imad',
-    //     job: 'Manager',
-    // },
-    // {
-    //     fullname: 'ahmed',
-    //     job: 'cleaner',
-    // },
-    // {
-    //     fullname: 'simo',
-    //     job: 'other',
-    // }
 ]
+
 
 const workersSide = document.getElementById('workers-container')
 
-
-// workers.forEach(worker => {
-//     workersSide.innerHTML += `
-//             <div class="flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
-//                 <img src="img/ground.jpg" alt="" class="rounded-full w-10 h-10">
-//                 <div>
-//                     <h2 class="font-bold">${worker.fullname}</h2>
-//                     <p class="text-sm text-gray-500">${worker.job}</p>
-//                 </div>
-//             </div>
-//     `
-// })
 
 const addex = document.getElementById('addex')
 const dynamic = document.querySelector('.dynamic')
@@ -63,6 +40,11 @@ const exForm = document.querySelector('.experience-form')
 
 addex.addEventListener('click', (e) => {
     e.preventDefault()
+    const newformcContainer = document.createElement('div')
+    newformcContainer.className = "flex flex-col gap-2 justify-center items-center"
+    const remove = document.createElement('button')
+    remove.innerHTML = `<ion-icon name="trash-sharp"></ion-icon> Remove`
+    remove.className = "bg-red-500 px-2 rounded-full text-white flex justify-center items-center gap-1 py-1"
     let newform = exForm.cloneNode(true)
 
     let inputs = newform.querySelectorAll('input')
@@ -70,7 +52,13 @@ addex.addEventListener('click', (e) => {
         input.value = ''
     }
     )
-    dynamic.appendChild(newform)
+    newformcContainer.appendChild(newform)
+    newformcContainer.appendChild(remove)
+    dynamic.appendChild(newformcContainer)
+
+    remove.addEventListener('click',()=>{
+        dynamic.removeChild(newformcContainer)
+    })
 })
 
 
@@ -109,9 +97,9 @@ form.addEventListener('submit', (e) => {
         console.log(workers)
 
         workersSide.innerHTML = ''
-        workers.forEach(worker => {
+        workers.forEach((worker, index) => {
             workersSide.innerHTML += `
-            <div data-id = '${workers.length - 1}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
+            <div data-id = '${index}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_20px_rgba(0,0,0,.3)] gap-4 items-center px-3">
                 <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
                 <div>
                     <h2 class="font-bold">${worker.fullname}</h2>
@@ -178,7 +166,7 @@ workersSide.addEventListener('click', (e) => {
         const profile = document.createElement('div')
         profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.6)]"
         profile.innerHTML = `
-        <div class="lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
+        <div class="profile-popup   lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
             <div id="banner" class="[background-image:url(img/banner.jpg)] bg-cover h-32 relative pl-4">
                 <div class="rounded-full w-20 h-20 absolute translate-y-[50%] bottom-0 p-1 bg-white">
                     <img src="${worker.picture}" alt="" class="rounded-full h-full w-full">
@@ -207,9 +195,18 @@ workersSide.addEventListener('click', (e) => {
         </div>
     `
         document.body.appendChild(profile)
+
+        // closing profile popup
+        profile.addEventListener('click', () => {
+            document.body.removeChild(profile)
+        })
+        document.querySelector('.profile-popup').addEventListener('click', (e) => {
+            e.stopPropagation()
+        })
     } else {
         return
     }
+
 })
 
 
@@ -321,14 +318,14 @@ function displayOnStaff() {
 const conferenceBtn = document.querySelector('#conference-btn')
 conferenceBtn.addEventListener('click', () => {
     let conferenceroom = document.querySelector('.conference')
-    const available = workers.filter(worker=> !worker.assigned)
-    workersBox(available , "conference room", conferenceroom)
+    const available = workers.filter(worker => !worker.assigned)
+    workersBox(available, "conference room", conferenceroom)
 })
 const receptionBtn = document.querySelector('#reception-btn')
 receptionBtn.addEventListener('click', () => {
     let receptionroom = document.querySelector('.reception')
-    const available = workers.filter(worker=> !worker.assigned)
-    workersBox(available , "reception room", receptionroom)
+    const available = workers.filter(worker => !worker.assigned)
+    workersBox(available, "reception room", receptionroom)
 })
 const serversBtn = document.querySelector('#servers-btn')
 serversBtn.addEventListener('click', () => {
