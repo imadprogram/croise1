@@ -58,15 +58,15 @@ addex.addEventListener('click', (e) => {
     newformContainer.appendChild(remove)
     dynamic.appendChild(newformContainer)
 
-    remove.addEventListener('click',()=>{
+    remove.addEventListener('click', () => {
         dynamic.removeChild(newformContainer)
     })
 })
 
-function clearDynamicForms(){
+function clearDynamicForms() {
     const alldynamicForms = document.querySelectorAll('.experience-form')
-    alldynamicForms.forEach((form,index)=>{
-        if(index > 0) form.parentElement.remove()
+    alldynamicForms.forEach((form, index) => {
+        if (index > 0) form.parentElement.remove()
     })
 }
 
@@ -104,18 +104,7 @@ form.addEventListener('submit', (e) => {
         workers.push(obj)
         console.log(workers)
 
-        workersSide.innerHTML = ''
-        workers.forEach((worker, index) => {
-            workersSide.innerHTML += `
-            <div data-id = '${index}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3">
-                <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
-                <div>
-                    <h2 class="font-bold">${worker.fullname}</h2>
-                    <p class="text-sm text-gray-500">${worker.job}</p>
-                </div>
-                <ion-icon name="trash-sharp" class="text-red-400"></ion-icon>
-            </div>
-            `
+        refreshSideList()
 
             formbg.querySelectorAll('input').forEach(field => {
                 field.value = ''
@@ -123,7 +112,7 @@ form.addEventListener('submit', (e) => {
 
             // dynamic.removeChild(newform)
             clearDynamicForms()
-        })
+
     } else {
         alert('false')
     }
@@ -266,10 +255,10 @@ function workersBox(ppl, title, room) {
         e.stopPropagation()
     }
     document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        document.body.removeChild(popup)
-    }
-})
+        if (e.key === 'Escape') {
+            document.body.removeChild(popup)
+        }
+    })
     // add them to the rooms
 
     popupmodal.addEventListener('click', (e) => {
@@ -279,7 +268,7 @@ function workersBox(ppl, title, room) {
             let worker = workers[id]
             workers[id].assigned = true
             let newbox = document.createElement('div')
-            newbox.className = "worker-box flex w-[90%] h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
+            newbox.className = "worker-box flex h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
             newbox.dataset.id = id
 
             let img = document.createElement('img')
@@ -291,15 +280,34 @@ function workersBox(ppl, title, room) {
             <h2 class="font-bold">${worker.fullname}</h2>
             <p class="text-sm text-gray-500">${worker.job}</p>
             `
-
             newbox.appendChild(img)
             newbox.appendChild(txt)
             room.appendChild(newbox)
+            newbox.innerHTML += `<ion-icon data-id="${id}" name="trash-sharp" class="text-red-400 trash-icon"></ion-icon>`
+            refreshSideList()
+            // workers = workers.filter(worker => worker.id !== id)
 
             document.body.removeChild(popup)
+
         }
+        // remove from the room
+        const trashbtn = document.querySelectorAll('.trash-icon')
+        trashbtn.forEach(trash => {
+            trash.addEventListener('click', (e) => {
+                let bin = e.target.closest('.worker-box')
+                if (bin) {
+                    let id = bin.dataset.id
+                    room.removeChild(bin)
+                    // workers[id].assigned = false
+                    delete workers[id].assigned
+                    refreshSideList()
+
+                }
+            })
+        })
     })
 }
+
 
 function displayOnServers() {
     let serverPPL = []
@@ -356,3 +364,19 @@ const archiveBtn = document.querySelector('#archive-btn')
 archiveBtn.addEventListener('click', () => {
     displayOnArchive()
 })
+
+function refreshSideList() {
+    workersSide.innerHTML = ''
+    workers.forEach((worker, index) => {
+        if (!worker.assigned)
+            workersSide.innerHTML += `
+            <div data-id = '${index}' class="worker-box   flex w-[90%] h-15 rounded-lg [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3 bg-white">
+                <img src="${worker.picture}" alt="" class="rounded-full w-10 h-10">
+                <div>
+                    <h2 class="font-bold">${worker.fullname}</h2>
+                    <p class="text-sm text-gray-500">${worker.job}</p>
+                </div>
+            </div>
+            `
+    })
+}
