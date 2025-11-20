@@ -330,8 +330,8 @@ function displayOnArchive() {
 function displayOnReception() {
     let recptionPPL = []
     recptionPPL = workers.filter(worker => (worker.job === 'Receptionist') && !worker.assigned)
-    let receptionroom = document.querySelector('.staff')
-    workersBox(recptionPPL, "staff room", receptionroom)
+    let receptionroom = document.querySelector('.reception')
+    workersBox(recptionPPL, "reception room", receptionroom)
 }
 
 // their buttons //
