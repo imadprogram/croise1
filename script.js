@@ -235,7 +235,7 @@ workersSide.addEventListener('click', (e) => {
 
 
 // add to room button
-function workersBox(ppl, title, room, limit, coloredroom) {
+function workersBox(ppl, title, room, limit) {
     let popup = document.createElement('div')
     let popupmodal = document.createElement('div')
     popup.className = 'fixed w-full h-full bg-[rgba(0,0,0,.2)] flex justify-center items-center backdrop-blur'
@@ -312,7 +312,6 @@ function workersBox(ppl, title, room, limit, coloredroom) {
                 newbox.appendChild(img)
                 newbox.appendChild(txt)
                 room.appendChild(newbox)
-                room.classList.remove("[background:rgba(255,0,0,0.2)]")
                 newbox.innerHTML += `<ion-icon data-id="${id}" name="trash-sharp" class="text-red-400 trash-icon"></ion-icon>`
                 refreshSideList()
                 // workers = workers.filter(worker => worker.id !== id)
@@ -332,14 +331,8 @@ function workersBox(ppl, title, room, limit, coloredroom) {
                     // workers[id].assigned = false
                     delete workers[id].assigned
                     refreshSideList()
-
                 }
             })
-            if (room.children.length > 0) {
-                coloredroom.classList.remove("[background:rgba(255,0,0,0.2)]")
-            } else {
-                coloredroom.classList.add("[background:rgba(255,0,0,0.2)]")
-            }
         })
     })
 }
@@ -349,25 +342,25 @@ function displayOnServers() {
     let serverPPL = []
     serverPPL = workers.filter(worker => (worker.job === 'IT' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let serverRoom = document.querySelector('.servers')
-    workersBox(serverPPL, "server room", serverRoom, 2, serverRoom)
+    workersBox(serverPPL, "server room", serverRoom, 2)
 }
 function displayOnSecurity() {
     let securityPPL = []
     securityPPL = workers.filter(worker => (worker.job === 'Security' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let securityRoom = document.querySelector('.security')
-    workersBox(securityPPL, "security room", securityRoom, 2, securityRoom)
+    workersBox(securityPPL, "security room", securityRoom, 2)
 }
 function displayOnArchive() {
     let archivePPL = []
     archivePPL = workers.filter(worker => (worker.job === 'Manager') && !worker.assigned)
     let archiveroom = document.querySelector('.archive')
-    workersBox(archivePPL, "archive room", archiveroom, 1, archiveroom)
+    workersBox(archivePPL, "archive room", archiveroom, 1)
 }
 function displayOnReception() {
     let recptionPPL = []
     recptionPPL = workers.filter(worker => (worker.job === 'Receptionist' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let receptionroom = document.querySelector('.reception')
-    workersBox(recptionPPL, "reception room", receptionroom, 1, receptionroom)
+    workersBox(recptionPPL, "reception room", receptionroom, 1)
 }
 
 // their buttons //
@@ -394,7 +387,7 @@ const staffBtn = document.querySelector('#staff-btn')
 staffBtn.addEventListener('click', () => {
     staffPPL = workers.filter(worker => !worker.assigned)
     let staffroom = document.querySelector('.staff')
-    workersBox(staffPPL, "staff room", staffroom)
+    workersBox(staffPPL, "staff room", staffroom, 3)
 })
 const archiveBtn = document.querySelector('#archive-btn')
 archiveBtn.addEventListener('click', () => {

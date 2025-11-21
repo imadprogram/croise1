@@ -100,8 +100,8 @@
       <form class="flex flex-col gap-6 justify-center items-center">
         <h1 class="font-bold">Add New Worker</h1>
         <input id="fullname" required type="text" placeholder="Full Name"
-          class="input w-80 h-10 border rounded-lg pl-3 shrink-0" name="fullname" />
-        <select name="job" class="input border w-80 py-2 rounded-lg shrink-0">
+          class="input w-80 h-10 bg-gray-200 rounded-lg pl-3 shrink-0" name="fullname" />
+        <select name="job" class="input bg-gray-200 w-80 py-2 rounded-lg shrink-0">
           <option value="Receptionist">Receptionist</option>
           <option value="IT">IT</option>
           <option value="Security">Security</option>
@@ -110,23 +110,23 @@
           <option value="Other">Other</option>
         </select>
         <input id="urlpreview" required type="text" placeholder="picture url"
-          class="input rounded-lg border h-10 w-80 pl-3 shrink-0" name="picture" />
+          class="input rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0" name="picture" />
         <img id="preview-img" src="" alt="" class="shrink-0 bg-gray-400 w-20 h-20 rounded-full" />
         <input id="email" required type="email" placeholder="Email"
-          class="input rounded-lg border h-10 w-80 pl-3 shrink-0" name="email" />
+          class="input rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0" name="email" />
         <input id="number" required type="text" placeholder="Phone Number"
-          class="input rounded-lg border h-10 w-80 pl-3 shrink-0" name="number" />
+          class="input rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0" name="number" />
 
         <div class="dynamic flex flex-col gap-4">
           <div class="experience-form flex flex-col justify-center items-center gap-5 shrink-0">
             <h2 class="font-bold">Experience</h2>
             <input required type="text" placeholder="Job Name" name="exjob"
-              class="rounded-lg border h-10 w-80 pl-3 shrink-0" />
+              class="rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0" />
             <input required type="text" placeholder="Company Name" name="company"
-              class="rounded-lg border h-10 w-80 pl-3 shrink-0" />
+              class="rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0" />
             <input required type="date" placeholder="From" name="from"
-              class="rounded-lg border h-10 w-80 pl-3 shrink-0  from-date" />
-            <input required type="date" placeholder="To" name="to" class="rounded-lg border h-10 w-80 pl-3 shrink-0  to-date" />
+              class="rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0  from-date" />
+            <input required type="date" placeholder="To" name="to" class="rounded-lg bg-gray-200 h-10 w-80 pl-3 shrink-0  to-date" />
           </div>
         </div>
         <button id="addex" class="rounded-lg bg-blue-400 h-10 w-40 pl-3 shrink-0">
