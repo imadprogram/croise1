@@ -42,25 +42,35 @@ const exForm = document.querySelector('.experience-form')
 
 addex.addEventListener('click', (e) => {
     e.preventDefault()
-    const newformContainer = document.createElement('div')
-    newformContainer.className = "flex flex-col gap-2 justify-center items-center"
-    const remove = document.createElement('button')
-    remove.innerHTML = `<ion-icon name="trash-sharp"></ion-icon> Remove`
-    remove.className = "bg-red-500 px-2 rounded-full text-white flex justify-center items-center gap-1 py-1"
-    let newform = exForm.cloneNode(true)
+    const lastExForm = dynamic.lastElementChild
+    let fromDate = lastExForm.querySelector('.from-date')
+    let toDate = lastExForm.querySelector('.to-date')
+    if (fromDate.value > toDate.value) {
+        fromDate.classList.add('bg-red-300')
+        toDate.classList.add('bg-red-300')
+    } else {
+        fromDate.classList.remove('bg-red-300')
+        toDate.classList.remove('bg-red-300')
+        const newformContainer = document.createElement('div')
+        newformContainer.className = "flex flex-col gap-2 justify-center items-center"
+        const remove = document.createElement('button')
+        remove.innerHTML = `<ion-icon name="trash-sharp"></ion-icon> Remove`
+        remove.className = "bg-red-500 px-2 rounded-full text-white flex justify-center items-center gap-1 py-1"
+        let newform = exForm.cloneNode(true)
 
-    let inputs = newform.querySelectorAll('input')
-    inputs.forEach(input => {
-        input.value = ''
+        let inputs = newform.querySelectorAll('input')
+        inputs.forEach(input => {
+            input.value = ''
+        }
+        )
+        newformContainer.appendChild(newform)
+        newformContainer.appendChild(remove)
+        dynamic.appendChild(newformContainer)
+
+        remove.addEventListener('click', () => {
+            dynamic.removeChild(newformContainer)
+        })
     }
-    )
-    newformContainer.appendChild(newform)
-    newformContainer.appendChild(remove)
-    dynamic.appendChild(newformContainer)
-
-    remove.addEventListener('click', () => {
-        dynamic.removeChild(newformContainer)
-    })
 })
 
 function clearDynamicForms() {
@@ -106,12 +116,12 @@ form.addEventListener('submit', (e) => {
 
         refreshSideList()
 
-            formbg.querySelectorAll('input').forEach(field => {
-                field.value = ''
-            })
+        formbg.querySelectorAll('input').forEach(field => {
+            field.value = ''
+        })
 
-            // dynamic.removeChild(newform)
-            clearDynamicForms()
+        // dynamic.removeChild(newform)
+        clearDynamicForms()
 
     } else {
         alert('false')
@@ -149,6 +159,21 @@ function numberValidation() {
     const numberValid = /\+(212)(5|6|7)[0-9]{8}/g
 
     if (numberValid.test(number)) return true
+}
+function dateValidation() {
+    // const fromDate = document.querySelector('.from-date')
+    // const toDate = document.querySelector('.to-date')
+
+    // dynamic.addEventListener('change', () => {
+    //     if (toDate.value < fromDate.value) {
+    //         dynamic.classList.add("[border:_solid_4px_red]")
+
+    //     } else {
+    //         dynamic.classList.remove("[border:_solid_4px_red]")
+    //         return true
+    //     }
+    // })
+
 }
 // function experienceValidation(){
 //     const fromdate = exForm.querySelector('.from').value
