@@ -42,13 +42,8 @@ const exForm = document.querySelector('.experience-form')
 
 addex.addEventListener('click', (e) => {
     e.preventDefault()
-    const lastExForm = dynamic.lastElementChild
-    let fromDate = lastExForm.querySelector('.from-date')
-    let toDate = lastExForm.querySelector('.to-date')
-    if (fromDate.value > toDate.value) {
-        fromDate.classList.add('bg-red-300')
-        toDate.classList.add('bg-red-300')
-    } else {
+    if (dateValidation()) {
+
         fromDate.classList.remove('bg-red-300')
         toDate.classList.remove('bg-red-300')
         const newformContainer = document.createElement('div')
@@ -84,7 +79,7 @@ const addworker = document.getElementById('addworker')
 
 
 form.addEventListener('submit', (e) => {
-    if (nameValidation() && emailValidation() && numberValidation()) {
+    if (nameValidation() && emailValidation() && numberValidation() && dateValidation()) {
         formbg.classList.add('hidden')
         Toastify({
             text: "new worker added",
@@ -161,20 +156,34 @@ function numberValidation() {
     if (numberValid.test(number)) return true
 }
 function dateValidation() {
-    // const fromDate = document.querySelector('.from-date')
-    // const toDate = document.querySelector('.to-date')
-
-    // dynamic.addEventListener('change', () => {
-    //     if (toDate.value < fromDate.value) {
-    //         dynamic.classList.add("[border:_solid_4px_red]")
-
-    //     } else {
-    //         dynamic.classList.remove("[border:_solid_4px_red]")
-    //         return true
-    //     }
-    // })
-
+    const lastExForm = dynamic.lastElementChild
+    let fromDate = lastExForm.querySelector('.from-date')
+    let toDate = lastExForm.querySelector('.to-date')
+    if (fromDate.value > toDate.value) {
+        fromDate.classList.add('bg-red-300')
+        toDate.classList.add('bg-red-300')
+        return false
+    } else {
+        fromDate.classList.remove('bg-red-300')
+        toDate.classList.remove('bg-red-300')
+        return true
+    }
 }
+// function dateValidation() {
+//     const fromDate = document.querySelector('.from-date')
+//     const toDate = document.querySelector('.to-date')
+
+//     dynamic.addEventListener('change', () => {
+//         if (toDate.value < fromDate.value) {
+//             dynamic.classList.add("[border:_solid_4px_red]")
+
+//         } else {
+//             dynamic.classList.remove("[border:_solid_4px_red]")
+//             return true
+//         }
+//     })
+
+// }
 // function experienceValidation(){
 //     const fromdate = exForm.querySelector('.from').value
 //     console.log(fromdate)
@@ -368,13 +377,13 @@ function displayOnReception() {
 
 // changing room colors
 
-function updateRoomColor(room){
+function updateRoomColor(room) {
     let boxes = room.querySelectorAll('.worker-box')
 
-    if(room.classList.contains('servers') || room.classList.contains('reception') || room.classList.contains('archive') || room.classList.contains('security')){
-        if(boxes.length > 0){
+    if (room.classList.contains('servers') || room.classList.contains('reception') || room.classList.contains('archive') || room.classList.contains('security')) {
+        if (boxes.length > 0) {
             room.classList.remove('[background:rgba(255,0,0,0.2)]')
-        }else{
+        } else {
             room.classList.add('[background:rgba(255,0,0,0.2)]')
         }
     }
