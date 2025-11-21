@@ -312,6 +312,7 @@ function workersBox(ppl, title, room, limit) {
                 newbox.appendChild(img)
                 newbox.appendChild(txt)
                 room.appendChild(newbox)
+                updateRoomColor(room)
                 newbox.innerHTML += `<ion-icon data-id="${id}" name="trash-sharp" class="text-red-400 trash-icon"></ion-icon>`
                 refreshSideList()
                 // workers = workers.filter(worker => worker.id !== id)
@@ -331,6 +332,7 @@ function workersBox(ppl, title, room, limit) {
                     // workers[id].assigned = false
                     delete workers[id].assigned
                     refreshSideList()
+                    updateRoomColor(room)
                 }
             })
         })
@@ -361,6 +363,21 @@ function displayOnReception() {
     recptionPPL = workers.filter(worker => (worker.job === 'Receptionist' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let receptionroom = document.querySelector('.reception')
     workersBox(recptionPPL, "reception room", receptionroom, 1)
+
+}
+
+// changing room colors
+
+function updateRoomColor(room){
+    let boxes = room.querySelectorAll('.worker-box')
+
+    if(room.classList.contains('servers') || room.classList.contains('reception') || room.classList.contains('archive') || room.classList.contains('security')){
+        if(boxes.length > 0){
+            room.classList.remove('[background:rgba(255,0,0,0.2)]')
+        }else{
+            room.classList.add('[background:rgba(255,0,0,0.2)]')
+        }
+    }
 }
 
 // their buttons //
