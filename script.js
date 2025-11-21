@@ -119,7 +119,15 @@ form.addEventListener('submit', (e) => {
         clearDynamicForms()
 
     } else {
-        alert('false')
+        Toastify({
+            text: "correct form infos first!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            style:{
+                background: "linear-gradient(to right, #e6220c, #ffad5c)",
+            }
+        }).showToast();
     }
 
     e.preventDefault()
