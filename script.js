@@ -235,7 +235,7 @@ workersSide.addEventListener('click', (e) => {
 
 
 // add to room button
-function workersBox(ppl, title, room, coloredroom) {
+function workersBox(ppl, title, room, limit, coloredroom) {
     let popup = document.createElement('div')
     let popupmodal = document.createElement('div')
     popup.className = 'fixed w-full h-full bg-[rgba(0,0,0,.2)] flex justify-center items-center backdrop-blur'
@@ -289,32 +289,37 @@ function workersBox(ppl, title, room, coloredroom) {
     popupmodal.addEventListener('click', (e) => {
         let box = e.target.closest('.worker-box')
         if (box) {
-            let id = box.dataset.id
-            let worker = workers[id]
-            workers[id].assigned = true
-            let newbox = document.createElement('div')
-            newbox.className = "worker-box flex h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
-            newbox.dataset.id = id
+            if (room.children.length > limit) {
+                alert('full')
+            } else {
 
-            let img = document.createElement('img')
-            img.src = worker.picture
-            img.className = "rounded-full w-10 h-10"
+                let id = box.dataset.id
+                let worker = workers[id]
+                workers[id].assigned = true
+                let newbox = document.createElement('div')
+                newbox.className = "worker-box flex h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
+                newbox.dataset.id = id
 
-            let txt = document.createElement('div')
-            txt.innerHTML = `
+                let img = document.createElement('img')
+                img.src = worker.picture
+                img.className = "rounded-full w-10 h-10"
+
+                let txt = document.createElement('div')
+                txt.innerHTML = `
             <h2 class="font-bold">${worker.fullname}</h2>
             <p class="text-sm text-gray-500">${worker.job}</p>
             `
-            newbox.appendChild(img)
-            newbox.appendChild(txt)
-            room.appendChild(newbox)
-            room.classList.remove("[background:rgba(255,0,0,0.2)]")
-            newbox.innerHTML += `<ion-icon data-id="${id}" name="trash-sharp" class="text-red-400 trash-icon"></ion-icon>`
-            refreshSideList()
-            // workers = workers.filter(worker => worker.id !== id)
+                newbox.appendChild(img)
+                newbox.appendChild(txt)
+                room.appendChild(newbox)
+                room.classList.remove("[background:rgba(255,0,0,0.2)]")
+                newbox.innerHTML += `<ion-icon data-id="${id}" name="trash-sharp" class="text-red-400 trash-icon"></ion-icon>`
+                refreshSideList()
+                // workers = workers.filter(worker => worker.id !== id)
 
-            document.body.removeChild(popup)
+                document.body.removeChild(popup)
 
+            }
         }
         // remove from the room
         const trashbtn = document.querySelectorAll('.trash-icon')
@@ -324,13 +329,17 @@ function workersBox(ppl, title, room, coloredroom) {
                 if (bin) {
                     let id = bin.dataset.id
                     room.removeChild(bin)
-                    coloredroom.classList.add("[background:rgba(255,0,0,0.2)]")
                     // workers[id].assigned = false
                     delete workers[id].assigned
                     refreshSideList()
 
                 }
             })
+            if (room.children.length > 0) {
+                coloredroom.classList.remove("[background:rgba(255,0,0,0.2)]")
+            } else {
+                coloredroom.classList.add("[background:rgba(255,0,0,0.2)]")
+            }
         })
     })
 }
@@ -340,25 +349,25 @@ function displayOnServers() {
     let serverPPL = []
     serverPPL = workers.filter(worker => (worker.job === 'IT' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let serverRoom = document.querySelector('.servers')
-    workersBox(serverPPL, "server room", serverRoom,serverRoom)
+    workersBox(serverPPL, "server room", serverRoom, 2, serverRoom)
 }
 function displayOnSecurity() {
     let securityPPL = []
     securityPPL = workers.filter(worker => (worker.job === 'Security' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let securityRoom = document.querySelector('.security')
-    workersBox(securityPPL, "security room", securityRoom, securityRoom)
+    workersBox(securityPPL, "security room", securityRoom, 2, securityRoom)
 }
 function displayOnArchive() {
     let archivePPL = []
     archivePPL = workers.filter(worker => (worker.job === 'Manager') && !worker.assigned)
     let archiveroom = document.querySelector('.archive')
-    workersBox(archivePPL, "archive room", archiveroom, archiveroom)
+    workersBox(archivePPL, "archive room", archiveroom, 1, archiveroom)
 }
 function displayOnReception() {
     let recptionPPL = []
-    recptionPPL = workers.filter(worker => (worker.job === 'Receptionist') && !worker.assigned)
+    recptionPPL = workers.filter(worker => (worker.job === 'Receptionist' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
     let receptionroom = document.querySelector('.reception')
-    workersBox(recptionPPL, "reception room", receptionroom, receptionroom)
+    workersBox(recptionPPL, "reception room", receptionroom, 1, receptionroom)
 }
 
 // their buttons //
@@ -367,7 +376,7 @@ const conferenceBtn = document.querySelector('#conference-btn')
 conferenceBtn.addEventListener('click', () => {
     let conferenceroom = document.querySelector('.conference')
     const available = workers.filter(worker => !worker.assigned)
-    workersBox(available, "conference room", conferenceroom)
+    workersBox(available, "conference room", conferenceroom, 1)
 })
 const receptionBtn = document.querySelector('#reception-btn')
 receptionBtn.addEventListener('click', () => {
