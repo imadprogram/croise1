@@ -124,7 +124,7 @@ form.addEventListener('submit', (e) => {
             duration: 3000,
             gravity: "top",
             position: "center",
-            style:{
+            style: {
                 background: "linear-gradient(to right, #e6220c, #ffad5c)",
             }
         }).showToast();
@@ -200,53 +200,7 @@ function dateValidation() {
 
 workersSide.addEventListener('click', (e) => {
     const box = e.target.closest('.worker-box')
-    if (box) {
-        const id = box.dataset.id
-        const worker = workers[id]
-        // console.log(worker)
-        const profile = document.createElement('div')
-        profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.2)] backdrop-blur"
-        profile.innerHTML = `
-        <div class="profile-popup   lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
-            <div id="banner" class="[background-image:url(img/banner.jpg)] bg-cover h-32 relative pl-4">
-                <div class="rounded-full w-20 h-20 absolute translate-y-[50%] bottom-0 p-1 bg-white">
-                    <img src="${worker.picture}" alt="" class="rounded-full h-full w-full">
-                </div>
-            </div>
-            <div id="infos" class="flex flex-col justify-center pt-12 pl-4 gap-2">
-                <h1 class="font-bold text-xl">${worker.fullname}</h1>
-                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-briefcase"></i> ${worker.job}</p>
-                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-envelope"></i> ${worker.email}</p>
-                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-phone"></i> ${worker.number}</p>
-                <div class="bg-gray-500 h-[0.05rem] mt-4"></div>
-                <div id="experiences-section" class="flex flex-col gap-4">
-                    <h1 class="text-lg font-semibold">Experiences</h1>
-                    ${worker.experiences.map(exp => `
-                        <div class="flex flex-col gap-2">
-                        <h2>Job: ${exp.exjob}</h2>
-                        <h2>Company: ${exp.company}</h2>
-                        <div class="flex gap-10">
-                            <h2>From: ${exp.from}</h2>
-                            <h2>To: ${exp.to}</h2>
-                        </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        </div>
-    `
-        document.body.appendChild(profile)
-
-        // closing profile popup
-        profile.addEventListener('click', () => {
-            document.body.removeChild(profile)
-        })
-        document.querySelector('.profile-popup').addEventListener('click', (e) => {
-            e.stopPropagation()
-        })
-    } else {
-        return
-    }
+    profilePopUp(box, 'unassigned')
 
 })
 
@@ -342,6 +296,7 @@ function workersBox(ppl, title, room, limit) {
         const trashbtn = document.querySelectorAll('.trash-icon')
         trashbtn.forEach(trash => {
             trash.addEventListener('click', (e) => {
+                e.stopPropagation()
                 let bin = e.target.closest('.worker-box')
                 if (bin) {
                     let id = bin.dataset.id
@@ -356,31 +311,85 @@ function workersBox(ppl, title, room, limit) {
     })
 }
 
+// show profile while on room
+function profilePopUp(box, room) {
+    if (box) {
+        const id = box.dataset.id
+        const worker = workers[id]
+        // console.log(worker)
+        const profile = document.createElement('div')
+        profile.className = "fixed  h-full w-full flex justify-center items-center bg-[rgba(0,0,0,.2)] backdrop-blur"
+        profile.innerHTML = `
+        <div class="profile-popup   lg:h-[80%] lg:w-[23em] h-[70vh] w-[90%] bg-white rounded-lg overflow-y-scroll [scrollbar-width:none]">
+            <div id="banner" class="[background-image:url(img/banner.jpg)] bg-cover h-32 relative pl-4">
+                <div class="rounded-full w-20 h-20 absolute translate-y-[50%] bottom-0 p-1 bg-white">
+                    <img src="${worker.picture}" alt="" class="rounded-full h-full w-full">
+                </div>
+            </div>
+            <div id="infos" class="flex flex-col justify-center pt-12 pl-4 gap-2">
+                <h1 class="font-bold text-xl">${worker.fullname}</h1>
+                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-briefcase"></i> ${worker.job}</p>
+                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-envelope"></i> ${worker.email}</p>
+                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-phone"></i> ${worker.number}</p>
+                <p class="text-gray-900 bg-gray-200 w-fit px-3 text-[0.7rem] rounded-full py-[0.2rem]"><i class="fa-solid fa-map-marker-alt"></i> ${room}</p>
+                <div class="bg-gray-500 h-[0.05rem] mt-4"></div>
+                <div id="experiences-section" class="flex flex-col gap-4">
+                    <h1 class="text-lg font-semibold">Experiences</h1>
+                    ${worker.experiences.map(exp => `
+                        <div class="flex flex-col gap-2">
+                        <h2>Job: ${exp.exjob}</h2>
+                        <h2>Company: ${exp.company}</h2>
+                        <div class="flex gap-10">
+                            <h2>From: ${exp.from}</h2>
+                            <h2>To: ${exp.to}</h2>
+                        </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `
+        document.body.appendChild(profile)
 
+        // closing profile popup
+        profile.addEventListener('click', () => {
+            document.body.removeChild(profile)
+        })
+        document.querySelector('.profile-popup').addEventListener('click', (e) => {
+            e.stopPropagation()
+        })
+    } else {
+        return
+    }
+}
+
+
+let serverRoom = document.querySelector('.servers')
 function displayOnServers() {
     let serverPPL = []
     serverPPL = workers.filter(worker => (worker.job === 'IT' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
-    let serverRoom = document.querySelector('.servers')
     workersBox(serverPPL, "server room", serverRoom, 2)
 }
+
+let securityRoom = document.querySelector('.security')
 function displayOnSecurity() {
     let securityPPL = []
     securityPPL = workers.filter(worker => (worker.job === 'Security' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
-    let securityRoom = document.querySelector('.security')
     workersBox(securityPPL, "security room", securityRoom, 2)
 }
+
+let archiveroom = document.querySelector('.archive')
 function displayOnArchive() {
     let archivePPL = []
     archivePPL = workers.filter(worker => (worker.job === 'Manager') && !worker.assigned)
-    let archiveroom = document.querySelector('.archive')
     workersBox(archivePPL, "archive room", archiveroom, 1)
 }
+
+let receptionroom = document.querySelector('.reception')
 function displayOnReception() {
     let recptionPPL = []
     recptionPPL = workers.filter(worker => (worker.job === 'Receptionist' || worker.job === 'Manager' || worker.job === 'Cleaning') && !worker.assigned)
-    let receptionroom = document.querySelector('.reception')
     workersBox(recptionPPL, "reception room", receptionroom, 1)
-
 }
 
 // changing room colors
@@ -397,35 +406,75 @@ function updateRoomColor(room) {
     }
 }
 
-// their buttons //
+// room manipulation //
 
 const conferenceBtn = document.querySelector('#conference-btn')
+let conferenceroom = document.querySelector('.conference')
 conferenceBtn.addEventListener('click', () => {
-    let conferenceroom = document.querySelector('.conference')
     const available = workers.filter(worker => !worker.assigned)
     workersBox(available, "conference room", conferenceroom, 1)
 })
+conferenceroom.addEventListener('click', (e) => {
+    let workerBox = e.target.closest('.worker-box')
+    if (!workerBox) return
+    profilePopUp(workerBox, 'conference room')
+})
+
+
 const receptionBtn = document.querySelector('#reception-btn')
 receptionBtn.addEventListener('click', () => {
     displayOnReception()
 })
+receptionroom.addEventListener('click', (e) => {
+    let workerBox = e.target.closest('.worker-box')
+    if (!workerBox) return
+    profilePopUp(workerBox, 'reception room')
+})
+
+
 const serversBtn = document.querySelector('#servers-btn')
 serversBtn.addEventListener('click', () => {
     displayOnServers()
 })
+serverRoom.addEventListener('click', (e) => {
+    let workerBox = e.target.closest('.worker-box')
+    if(!workerBox) return
+    profilePopUp(workerBox, 'server room')
+})
+
+
 const securityBtn = document.querySelector('#security-btn')
 securityBtn.addEventListener('click', () => {
     displayOnSecurity()
 })
+securityRoom.addEventListener('click', (e) => {
+    let workerBox = e.target.closest('.worker-box')
+    if (!workerBox) return
+    profilePopUp(workerBox, 'security room')
+})
+
+
 const staffBtn = document.querySelector('#staff-btn')
+let staffroom = document.querySelector('.staff')
 staffBtn.addEventListener('click', () => {
     staffPPL = workers.filter(worker => !worker.assigned)
-    let staffroom = document.querySelector('.staff')
     workersBox(staffPPL, "staff room", staffroom, 3)
 })
+staffroom.addEventListener('click', (e) => {
+    let workerBox = e.target.closest('.worker-box')
+    if (!workerBox) return
+    profilePopUp(workerBox, 'staff room')
+})
+
+
 const archiveBtn = document.querySelector('#archive-btn')
 archiveBtn.addEventListener('click', () => {
     displayOnArchive()
+})
+archiveroom.addEventListener('click', (e) => {
+    let workerBox = e.target.closest('.worker-box')
+    if (!workerBox) return
+    profilePopUp(workerBox, 'archive room')
 })
 
 function refreshSideList() {
