@@ -45,6 +45,29 @@
     #rooms .archive {
       grid-area: 21 / 48 / 40 / 61;
     }
+    @media (max-width:640px) {
+      .worker-box.inroom{
+        width: fit-content;
+        height: fit-content;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0;
+        align-items: center;
+      }
+      .worker-box.inroom h2{
+        font-size: 0.4rem;
+      }
+      .worker-box.inroom img{
+        width: 1em;
+        height: 1em;
+      }
+      .worker-box.inroom ion-icon{
+        position: absolute;
+        top: -10px;
+        right: -10px;
+
+      }
+    }
   </style>
 
 <body class="flex flex-col-reverse lg:flex-row h-svh w-full">

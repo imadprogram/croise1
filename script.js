@@ -268,7 +268,7 @@ function workersBox(ppl, title, room, limit) {
                 let worker = workers[id]
                 workers[id].assigned = true
                 let newbox = document.createElement('div')
-                newbox.className = "worker-box flex h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
+                newbox.className = "worker-box flex lg:h-15 rounded-lg bg-white [box-shadow:0_10px_10px_rgba(0,0,0,.1)] gap-4 items-center px-3"
                 newbox.dataset.id = id
 
                 let img = document.createElement('img')
@@ -278,7 +278,7 @@ function workersBox(ppl, title, room, limit) {
                 let txt = document.createElement('div')
                 txt.innerHTML = `
             <h2 class="font-bold">${worker.fullname}</h2>
-            <p class="text-sm text-gray-500">${worker.job}</p>
+            <p class="text-sm text-gray-500 hidden lg:block">${worker.job}</p>
             `
                 newbox.appendChild(img)
                 newbox.appendChild(txt)
@@ -301,6 +301,7 @@ function workersBox(ppl, title, room, limit) {
                 if (bin) {
                     let id = bin.dataset.id
                     room.removeChild(bin)
+                    bin.classList.remove('inroom','relative')
                     // workers[id].assigned = false
                     delete workers[id].assigned
                     refreshSideList()
@@ -308,6 +309,9 @@ function workersBox(ppl, title, room, limit) {
                 }
             })
         })
+        // responsive boxes in the rooms
+        const boxInRoom = room.querySelectorAll('.worker-box')
+        boxInRoom.forEach(inroom => inroom.classList.add('inroom', 'relative'))
     })
 }
 
