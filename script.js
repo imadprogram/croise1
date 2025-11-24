@@ -44,8 +44,8 @@ addex.addEventListener('click', (e) => {
     e.preventDefault()
     if (dateValidation()) {
 
-        fromDate.classList.remove('bg-red-300')
-        toDate.classList.remove('bg-red-300')
+        // fromDate.classList.remove('bg-red-300')
+        // toDate.classList.remove('bg-red-300')
         const newformContainer = document.createElement('div')
         newformContainer.className = "flex flex-col gap-2 justify-center items-center"
         const remove = document.createElement('button')
